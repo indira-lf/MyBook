@@ -104,9 +104,9 @@ public class MyClassLoader extends ClassLoader{
 
 3. 多态（Polymorphism）
 
-​	一个类实例的相同方法在不同情形下有不同的表现形式。
+  ​一个类实例的相同方法在不同情形下有不同的表现形式。
 
-​	关于栗子在第2章介绍。
+  ​关于栗子在第2章介绍。
 
 ## 1.3 面向对象的五大基本原则
 
@@ -121,3 +121,72 @@ public class MyClassLoader extends ClassLoader{
 5. 依赖倒置原则：程序要依赖于抽象接口，而不是具体的实现。
 
 # 第2章 面向对象的核心概念
+
+## 2.1重载和重写
+
+`1.定义` 
+
+**重载：** 在同一个类中，多个函数或者方法有相同的名称，但参数列表不同，这样的同名不同参数的函数或者方法，互相称之为重载函数或者重载方法。
+
+**重写：** 在Java的子类与父类中，有两个名称和参数列表都有相同的方法他，由于它们具有相同的方法签名，所以子类中的新方法将覆盖父类中原有的方法。
+
+`2.重载的例子`
+
+方法重载需要满足以下条件和要求：
+
+- 被重载的方法必须改变参数列表。
+- 被重载的方法可以改变返回类型。
+- 被重载的方法可以改变访问修饰符。
+- 被重载的方法可以声明新的或更广的检查异常。
+- 方法能够在同一个类中或者在子类中被重载。
+
+```java
+public class User {
+    public void eat(String food){
+        System.out.println("eat "+food);
+    }
+
+    public void eat(Map map){
+        System.out.println("eat "+ map.get("food"));
+    }
+
+    public String eat(int num) {
+        return "吃完了";
+    }
+}
+```
+
+`3.重写的例子` 
+
+方法重写需要满足以下条件和要求：
+
+- 参数列表必须完全与被重写方法的参数列表相同。
+- 返回参数类型必须与被重写方法的返回类型相同。
+- 访问级别的限制性一定不能比被重写方法的限制性强。
+- 访问级别的限制性可以比被重写方法的限制性弱。
+- 重写方法一定不能抛出新的检查异常或比被重写的方法声明的检查异常有更广泛的检查异常。
+- 重写的方法能够抛出更少或更有限的异常（也就是说，被重写的方法声明了异常，但重写的方法可以什么也不声明）。
+- 不能重写被表示为final的方法。
+- 如果不能继承一个方法，则不能重写这个方法。
+
+```java
+class Person {
+    public void eat(String food){
+        System.out.println(food);
+    }
+}
+
+public class User extends Person {
+    
+    @Override
+    public void eat(String food){
+        System.out.println("eat "+food);
+    }
+
+}
+```
+
+
+
+ 
+
