@@ -162,9 +162,9 @@ http {
 
 未开启时，需要拷贝文件
 
-![sendfile配置no](assest/sendfile配置no.png)
+![sendfile配置no](assets/sendfile配置no.png)
 
 开启后
 
-![sendfile配置yes](assest/sendfile配置yes.png)
+![sendfile配置yes](assets/sendfile配置yes.png)
 
