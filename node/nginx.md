@@ -168,7 +168,7 @@ http {
 
 ![sendfile配置yes](assets/sendfile配置yes.png)
 
-### server配置
+### server_name配置规则
 
 **1、修改本地hosts文件** 
 
