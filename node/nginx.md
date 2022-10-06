@@ -158,7 +158,7 @@ http {
 
 ```
 
-**sendfile配置**
+### sendfile配置
 
 未开启时，需要拷贝文件
 
@@ -167,4 +167,91 @@ http {
 开启后
 
 ![sendfile配置yes](assets/sendfile配置yes.png)
+
+### server配置
+
+**1、修改本地hosts文件** 
+
+```properties
+47.103.96.17 llf.nginxa.com
+47.103.96.17 www.nginxa.com
+```
+
+**服务器创建index.html**
+
+```
+mkdir /www/www
+mkdir /www/vod
+
+vim /www/www/index.html
+vim /www/vod/index.html
+```
+
+**修改nginx.conf配置**
+
+1. 不同端口
+
+```coffeescript
+    server {
+        listen       81;
+        server_name  nginxa.com;
+
+        #charset koi8-r;
+
+        #access_log  logs/host.access.log  main;
+
+        location / {
+            root   /www/www;
+            index  index.html index.htm;
+        }
+
+        #error_page  404              /404.html;
+
+        # redirect server error pages to the static page /50x.html
+        #
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   html;
+        }
+    }
+
+    server {
+        listen       82;
+        server_name  llf.nginxa.com;
+
+        #charset koi8-r;
+
+        #access_log  logs/host.access.log  main;
+
+        location / {
+            root   /www/vod;
+            index  index.html index.htm;
+        }
+
+        #error_page  404              /404.html;
+
+        # redirect server error pages to the static page /50x.html
+        #
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   html;
+        }
+    }
+```
+
+2. 相同端口
+
+```coffeescript
+1、完整匹配
+	server_name  llf.nginxa.com;
+
+2、通配符匹配
+	server_name  *.nginxa.com;
+
+3、通配符结束匹配
+	server_name  llf.*;
+
+4、正则匹配
+	server_name ~^[0-9]+\.nginxa\.com$;
+```
 
