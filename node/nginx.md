@@ -170,6 +170,13 @@ http {
 
 ### server_name配置规则
 
+> 匹配顺序：
+>
+> 1. 精确的名字
+> 2. 以*号开头的最长通配符名称，例如 *.example.org
+> 3. 以*号结尾的最长通配符名称，例如 mail. *
+> 4. 第一个匹配的正则表达式（在配置文件中出现的顺序）
+
 **1、修改本地hosts文件** 
 
 ```properties
@@ -255,3 +262,39 @@ vim /www/vod/index.html
 	server_name ~^[0-9]+\.nginxa\.com$;
 ```
 
+
+
+## 反向代理
+
+**概念** 
+
+`反向代理（Reverse Proxy）` 方式是指以代理服务器来接受Internet上的连接请求，然后将请求转发给内部网络上的服务器，并将从服务器上得到的结果返回给Internet上请求连接的客户端，此时代理服务器对外就表现为一个服务器。
+
+**配置修改** 
+
+```coffeescript
+    server {
+        listen       80;
+        server_name  www.atnginx.com;
+
+        #charset koi8-r;
+
+        #access_log  logs/host.access.log  main;
+
+        location / {
+            #root   /www/www;
+            #index  index.html index.htm;
+			
+			proxy_pass http://www.atguigu.com;
+        }
+
+        #error_page  404              /404.html;
+
+        # redirect server error pages to the static page /50x.html
+        #
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   html;
+        }
+    }
+```
