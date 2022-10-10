@@ -298,3 +298,54 @@ vim /www/vod/index.html
         }
     }
 ```
+## 负载均衡
+
+###  负载均衡策略
+
+**1、轮询** 
+
+```coffeescript
+	upstream httpds {
+		server 192.168.44.102:80;
+		server 192.168.44.103:80;
+	}
+
+    location / {
+        #root   /www/www;
+        #index  index.html index.htm;
+		
+		proxy_pass http://httpds; # httpds为别名
+    }
+```
+**2、权重** 
+
+```coffeescript
+upstream httpds {
+    # weight 加负载均衡的权重，down、backup不常用
+	server 192.168.44.102:80 weight=8 down; #加down后不参加负载均衡
+	server 192.168.44.103:80 weight=2;
+	server 192.168.44.104:80 weight=1 backup; #backup 备用机
+}
+
+location / {
+    #root   /www/www;
+    #index  index.html index.htm;
+	
+	proxy_pass http://httpds; # httpds为别名
+}
+```
+**3、ip_hash** 
+
+根据客户端的ip地址转发同一台服务器，可以保持会话。
+
+**4、least_conn** 
+
+最少连接访问
+
+**5、url_hash**
+
+根据用户访问的url定向转发请求
+
+**6、fair** 
+
+根据后端服务器响应时间转发请求
